@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubjectRepository  extends JpaRepository<Subject, Integer> {
-    Subject findByName(String role);
+    Subject findByName(String name);
 }
