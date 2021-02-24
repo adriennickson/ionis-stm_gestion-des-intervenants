@@ -50,6 +50,10 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey, referencedColumnName = "speaker_id", name = "speaker_id", nullable=true)
+    private Speaker speaker;
+
     public int getId() {
         return id;
     }

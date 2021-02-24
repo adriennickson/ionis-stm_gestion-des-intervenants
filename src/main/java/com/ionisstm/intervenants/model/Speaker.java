@@ -8,7 +8,7 @@ public class Speaker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "subject_id")
+    @Column(name = "speaker_id")
     private int id;
 
 }

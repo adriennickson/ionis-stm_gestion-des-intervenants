@@ -98,16 +98,16 @@
                             <thead>
                             <tr>
                                 <th class="text-left text-blue-900">Name</th>
+                                <th class="text-left text-blue-900">Last name</th>
                                 <th class="text-left text-blue-900">Role</th>
-                                <th class="text-left text-blue-900">Last login</th>
                             </tr>
                             </thead>
 
                             <tbody>
                             <tr>
-                                <td>Obi Wan Kenobi</td>
-                                <td>Greedo</td>
-                                <td>00/00/0000</td>
+                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.lastName}"></td>
+                                <td th:text="${user.roles[0].role}">Greedo</td>
                             </tr>
                             </tbody>
                         </table>
