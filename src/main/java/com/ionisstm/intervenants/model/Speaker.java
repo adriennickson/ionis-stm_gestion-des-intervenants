@@ -1,6 +1,10 @@
 package com.ionisstm.intervenants.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -11,6 +15,23 @@ public class Speaker {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "speaker_id")
     private int id;
+
+    @Column(name = "email")
+    //@Email(message = "*Please provide a valid Email")
+    @Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
+    @NotNull(message = "*Please provide an email")
+    @NotEmpty(message = "*Please provide an email")
+    private String email;
+
+    @Column(name = "name")
+    @NotNull(message = "*Please provide your name")
+    @NotEmpty(message = "*Please provide your name")
+    private String name;
+
+    @Column(name = "last_name")
+    @NotNull(message = "*Please provide your last name")
+    @NotEmpty(message = "*Please provide your last name")
+    private String lastName;
 
     @OneToMany(mappedBy="speaker")
     private Set<Address> addresses;
@@ -131,5 +152,29 @@ public class Speaker {
 
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
