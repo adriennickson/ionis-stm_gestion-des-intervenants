@@ -14,7 +14,7 @@ public class Subject {
     @Column(name = "subject_id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @NotNull(message = "*Please provide a subject name")
     @NotEmpty(message = "*Please provide a subject name")
     private String name;
