@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>speakers</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+<!--Nav-->
+<nav th:replace="admin/fragments/header :: header"></nav>
+
+<div class="flex flex-col md:flex-row">
+
+    <div th:replace="admin/fragments/sidemenu :: sidemenu"></div>
+
+    <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+        <div class="bg-gray-800 pt-3">
+            <div class="relative rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                <h3 class="font-bold pl-2">Résultat de la recherche</h3>
+                <a class="absolute inset-y-1 right-0 inline-flex items-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" href="/admin/speakers/add"><i class="fas fa-plus pr-0 md:pr-3"></i>Add speaker</a>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap">
+            <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                <table class="min-w-full">
+                    <thead>
+                    <tr>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            id
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            mail
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            Status
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            Matières
+                        </th>
+                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-100"></th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="bg-white">
+                    <tr th:each="speaker: ${speakers}">
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <div class="flex items-center">
+                                <div>
+                                    <div class="text-sm leading-5 font-medium text-gray-900" th:text="${speaker.id}"></div>
+                                    <div class="text-sm leading-5 text-gray-500" th:text="${speaker.name} + ' ' + ${speaker.lastName}"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" th:text="${speaker.email}"></td>
+
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <span th:if="${speaker.blacklist != true}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
+                            <span th:if="${speaker.blacklist == true}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">blacklisté</span>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-1 text-xs px-4 rounded-full" th:href="@{/admin/speakers/{id}/subjects(id = ${speaker.id})}">edit</a>
+                            <span class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700" th:each="subject : ${speaker.subjects}" th:text="${subject.name}">Modiffier</span>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
+                            <a th:href="@{/admin/speakers/{id}/detail(id = ${speaker.id})}" class="text-indigo-600 hover:text-indigo-900">Detail</a>
+
+                            <a th:href="@{/admin/speakers/{id}/edit(id = ${speaker.id})}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+
+                            <a th:href="@{/admin/speakers/{id}/upload(id = ${speaker.id})}" class="text-indigo-600 hover:text-indigo-900">Upload</a>
+
+                            <form class="inline-block" th:action="@{/admin/speaker/{id}/delete(id = ${speaker.id})}" method="POST">
+                                <button class="bg-redbg-red-100 text-red-800 p-2 hover:text-indigo-900" type="Submit">delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script>
+    /*Toggle dropdown list*/
+    function toggleDD(myDropMenu) {
+        document.getElementById(myDropMenu).classList.toggle("invisible");
+    }
+    /*Filter dropdown options*/
+    function filterDD(myDropMenu, myDropMenuSearch) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(myDropMenuSearch);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(myDropMenu);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+            var dropdowns = document.getElementsByClassName("dropdownlist");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (!openDropdown.classList.contains('invisible')) {
+                    openDropdown.classList.add('invisible');
+                }
+            }
+        }
+    }
+</script>
+
+
+</body>
+
+</html>
