@@ -113,15 +113,27 @@
 
                         </div>
                         <div id="interventions" class="hidden">
-                            <p class="text-sm font-extrabold">Master 1 Biotech -- Je marché des biotechs -- 2019-2020</p>
-                            <p class="text-xs font-bold mb-4">A+
-                                <span class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700">Modiffier</span>
-                            </p>
 
-                            <p class="text-sm font-extrabold">Master 2 Général -- Je Marketing -- 2020-2021</p>
-                            <p class="text-xs font-bold mb-4">Pas encore évalué
-                                <span class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700">Evaluer</span>
-                            </p>
+                            <div class="pt-2 pb-8">
+                                <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" th:href="@{/admin/speakers/{id}/session(id = ${id})}">
+                                    Ajouter une session
+                                </a>
+                            </div>
+
+                            <div th:each="speakerSession: ${speaker.sessions}">
+                                <p class="text-sm font-extrabold">Master 1 Biotech -- Je marché des biotechs -- 2019-2020</p>
+                                <p class="text-xs font-bold mb-4" th:if="${speakerSession.evaluation != null and speakerSession.evaluation.length() > 0}"><span th:text="${speakerSession.evaluation}"></span>
+                                    <a
+                                            th:href="@{/admin/speakers/{id}/session/{session_id}/evaluate(id = ${id}, session_id = ${speakerSession.id})}"
+                                            class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700">Modiffier</a>
+                                </p>
+                                <p class="text-xs font-bold mb-4" th:if="${speakerSession.evaluation == null or speakerSession.evaluation.length() == 0}">Pas encore évalué
+                                    <a
+                                            th:href="@{/admin/speakers/{id}/session/{session_id}/evaluate(id = ${id}, session_id = ${speakerSession.id})}"
+                                            class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700">Evaluer</a>
+                                </p>
+                            </div>
+
                         </div>
                         <div id="competences" class="hidden flex flex-row  space-x-2">
                             <div class="pt-2 pb-8">

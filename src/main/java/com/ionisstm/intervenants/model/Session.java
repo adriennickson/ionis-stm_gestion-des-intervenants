@@ -22,10 +22,48 @@ public class Session {
 
     // Prendre la première année de l'année académique (Par exemple pour l'année 2020-2021 prende 2020)
     @Column(name = "year", nullable = false)
-    private Date dateAddressTo;
+    private Date year;
 
     @Column(name = "evaluation")
-    private int evaluation;
+    private String evaluation;
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Speaker getSpeaker() {
+        return speaker;
+    }
+
+    public void setSpeaker(Speaker speaker) {
+        this.speaker = speaker;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Date getYear() {
+        return year;
+    }
+
+    public void setYear(Date year) {
+        this.year = year;
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation;
+    }
 }

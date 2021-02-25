@@ -77,7 +77,7 @@
                         </td>
 
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <a    class="bg-green-700 hover:bg-green-900 text-white font-bold py-1 text-xs px-4 rounded-full" th:href="@{/admin/speakers/{id}/subjects(id = ${speaker.id})}">edit</a>
+                            <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-1 text-xs px-4 rounded-full" th:href="@{/admin/speakers/{id}/subjects(id = ${speaker.id})}">edit</a>
                             <span class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700" th:each="subject : ${speaker.subjects}" th:text="${subject.name}">Modiffier</span>
                         </td>
 
