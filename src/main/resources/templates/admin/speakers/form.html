@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Speaker</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+<!--Nav-->
+<nav th:replace="admin/fragments/header :: header"></nav>
+
+<div class="flex flex-col md:flex-row">
+
+    <div th:replace="admin/fragments/sidemenu :: sidemenu"></div>
+
+    <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+        <div class="bg-gray-800 pt-3">
+            <div class="relative rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                <h3 class="font-bold pl-2">Speakers</h3>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap">
+            <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                    <form class="p-4" autocomplete="off" action="#" th:action="@{/admin/speakers/save}"
+                          th:object="${speaker}" method="post">
+                        <div class="flex justify-between items-center px-5 py-3 text-gray-700 border-b">
+                            <h3 class="text-sm" th:if="${speaker.id == null || speaker.id == 0}">Add speaker</h3>
+                            <h3 class="text-sm" th:if="${speaker.id != null && speaker.id != 0}">Edit speaker <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" th:text="${speaker.id}"></span></h3>
+                        </div>
+
+                        <div th:if="${speaker.id != null}">
+                            <input type="hidden" th:field="*{id}">
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Name</label>
+                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="text"
+                                        th:field="*{name}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Last Name</label>
+                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="text"
+                                        th:field="*{lastName}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Email</label>
+                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="email"
+                                        th:field="*{email}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <label class="inline-flex items-center">
+                                    <input
+                                            type="checkbox"
+                                            class="form-checkbox text-indigo-600"
+                                            th:checked="${speaker.blacklist}"
+                                            th:field="*{blacklist}"
+                                            onchange="console.log(this.checked); "
+                                    />
+                                    <span class="mx-2 text-gray-600 text-sm">Blacklisté?</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Statut</label>
+                            <label th:if="${#fields.hasErrors('professionalStatus')}" th:errors="*{professionalStatus}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+
+                                <select
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                        name="pets"
+                                        th:field="*{professionalStatus}">
+                                    <option value="">--Please choose an option--</option>
+                                    <option value="Salarié">Salarié</option>
+                                    <option value="Autoentrepreneur">Autoentrepreneur</option>
+                                    <option value="Travailleur indépendant">Travailleur indépendant</option>
+                                    <option value="Société prestataire">Société prestataire</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Métier / poste actuel</label>
+                            <label th:if="${#fields.hasErrors('job')}" th:errors="*{job}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="text"
+                                        th:field="*{job}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Tarif Bc</label>
+                            <label th:if="${#fields.hasErrors('bachelorRate')}" th:errors="*{bachelorRate}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="number"
+                                        th:field="*{bachelorRate}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Tarif M1</label>
+                            <label th:if="${#fields.hasErrors('masterOneRate')}" th:errors="*{masterOneRate}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="number"
+                                        th:field="*{masterOneRate}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-6 bg-gray-200 text-gray-700 border-b">
+                            <label class="text-xs">Tarif M2</label>
+                            <label th:if="${#fields.hasErrors('masterTwoRate')}" th:errors="*{masterTwoRate}" class="text-red-500 validation-message"></label>
+                            <div class="mt-2 relative rounded-md shadow-sm">
+                                <input
+                                        type="number"
+                                        th:field="*{masterTwoRate}"
+                                        class="form-input w-full px-12 py-2 appearance-none rounded-md focus:border-indigo-600"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center px-5 py-3">
+                            <a class="inline-flex items-center h-8 px-3 py-1 m-2 text-sm text-gray-700 transition-colors duration-150 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none" href="/admin/speakers">Cancel</a>
+                            <button class="px-3 py-1 bg-indigo-600 text-white rounded-md text-sm hover:bg-indigo-500 focus:outline-none">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script>
+    /*Toggle dropdown list*/
+    function toggleDD(myDropMenu) {
+        document.getElementById(myDropMenu).classList.toggle("invisible");
+    }
+    /*Filter dropdown options*/
+    function filterDD(myDropMenu, myDropMenuSearch) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(myDropMenuSearch);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(myDropMenu);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+            var dropdowns = document.getElementsByClassName("dropdownlist");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (!openDropdown.classList.contains('invisible')) {
+                    openDropdown.classList.add('invisible');
+                }
+            }
+        }
+    }
+</script>
+
+
+</body>
+
+</html>

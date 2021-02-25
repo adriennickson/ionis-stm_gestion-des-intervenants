@@ -62,6 +62,9 @@ public class Speaker {
     @Column(name = "is_blacklist")
     private Boolean isBlacklist;
 
+    @Column(name = "resume_path")
+    private String resumePath;
+
     @ManyToMany
     @JoinTable(name = "speaker_subject", joinColumns = @JoinColumn(name = "speaker_id"), inverseJoinColumns = @JoinColumn(name = "supject_id"))
     private Set<Subject> subjects;
@@ -176,5 +179,13 @@ public class Speaker {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getResumePath() {
+        return resumePath;
+    }
+
+    public void setResumePath(String resumePath) {
+        this.resumePath = resumePath;
     }
 }

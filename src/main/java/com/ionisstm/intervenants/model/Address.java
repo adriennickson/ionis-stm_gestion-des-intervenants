@@ -49,9 +49,9 @@ public class Address {
     private String linePhoneOne;
 
     @Column(name = "line_phone_two")
-    @Pattern(regexp="^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
+    @Pattern(regexp="(^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
             + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
-            + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$",
+            + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$)?",
             message="Please provide a valid phone number")
     private String linePhoneTwo;
 
@@ -64,4 +64,84 @@ public class Address {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey, name = "speaker_id", nullable=false, referencedColumnName = "speaker_id")
     private Speaker speaker;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getLinePhoneOne() {
+        return linePhoneOne;
+    }
+
+    public void setLinePhoneOne(String linePhoneOne) {
+        this.linePhoneOne = linePhoneOne;
+    }
+
+    public String getLinePhoneTwo() {
+        return linePhoneTwo;
+    }
+
+    public void setLinePhoneTwo(String linePhoneTwo) {
+        this.linePhoneTwo = linePhoneTwo;
+    }
+
+    public Date getDateAddressFrom() {
+        return dateAddressFrom;
+    }
+
+    public void setDateAddressFrom(Date dateAddressFrom) {
+        this.dateAddressFrom = dateAddressFrom;
+    }
+
+    public Date getDateAddressTo() {
+        return dateAddressTo;
+    }
+
+    public void setDateAddressTo(Date dateAddressTo) {
+        this.dateAddressTo = dateAddressTo;
+    }
+
+    public Speaker getSpeaker() {
+        return speaker;
+    }
+
+    public void setSpeaker(Speaker speaker) {
+        this.speaker = speaker;
+    }
 }

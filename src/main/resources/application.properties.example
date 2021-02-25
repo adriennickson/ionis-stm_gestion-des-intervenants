@@ -32,3 +32,6 @@ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
 spring.datasource.initialization-mode=always
 
 #logging.level.org.springframework.security=DEBUG
+
+spring.servlet.multipart.max-file-size=12288KB
+spring.servlet.multipart.max-request-size=12288KB

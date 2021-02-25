@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class SubjectController {
+public class AdminSubjectController {
     @Autowired
     private SubjectRepository subjectRepository;
 
@@ -57,7 +57,7 @@ public class SubjectController {
     }
 
     @RequestMapping(value="/admin/subjects/{id}/delete", method = RequestMethod.POST)
-    public String peristSubject(@PathVariable("id") int id){
+    public String deleteSubject(@PathVariable("id") int id){
         // Todo: Vérifier avant la suppretion si l'enregistrement est utilisé comme clef étrangère dans une autre table
         subjectRepository.deleteById(id);
         return "redirect:/admin/subjects/";

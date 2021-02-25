@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Speaker</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"> <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/css/skills.css}">
+
+</head>
+
+<body class="bg-gray-800 font-sans leading-normal tracking-normal mt-12">
+
+<!--Nav-->
+<nav th:replace="admin/fragments/header :: header"></nav>
+
+<div class="flex flex-col md:flex-row">
+
+    <div th:replace="admin/fragments/sidemenu :: sidemenu"></div>
+
+    <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+
+        <div class="bg-gray-800 pt-3">
+            <div class="relative rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+                <h3 class="font-bold pl-2">
+                    Speaker
+                    <span class="px-2 inline-flex text-xs leading-2 font-semibold text-green-100" th:text="${speaker.id}"></span>
+                </h3>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap">
+            <div class="w-full flex pt-10 h-auto lg:h-screen flex-wrap mx-1 lg:mx-32 my-1 lg:my-5 lg:my-0">
+
+                <!--Main Col-->
+                <div id="profile" class="w-full lg:w-5/5 rounded-lg lg:rounded-l-lg shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+
+                    <div class="p-4 md:p-8 text-center lg:text-left">
+                        <h1 class="text-3xl font-bold pt-8 lg:pt-0">
+                            <span th:text="${speaker.name} + ' ' + ${speaker.lastName}"></span>
+                            <a class="bg-green-700 hover:bg-green-900 text-white font-bold px-4 rounded-full" th:href="@{/admin/speakers/{id}/edit(id= ${speaker.id})}">
+                                Modifier
+                            </a>
+                        </h1>
+
+                        <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start" th:text="'Status: ' + ${speaker.professionalStatus != null ? speaker.professionalStatus:'Non défini'}"></p>
+                        <!--
+                        <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                            Evry, France - &nbsp;
+                            <a href="https://www.linkedin.com/in/adrien-nickson-momo/" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" width=20><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            </a> &nbsp;
+                            <a href="https://github.com/adriennickson/" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" width=20><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            </a>
+                        </p>
+                        -->
+
+                        <div class="mt-6 pb-16 lg:pb-8 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
+                            <a class="link" href="#" onclick="switchTo('apropos')" data-tippy-content="à propos de moi">à propos</a> |
+                            <a class="link" href="#" onclick="switchTo('adresses')" data-tippy-content="expérience">adresses</a> |
+                            <a class="link" href="#" onclick="switchTo('competences')" data-tippy-content="expérience">competences</a> |
+                            <a class="link" href="#" onclick="switchTo('interventions')" data-tippy-content="éducation">interventions</a>
+                        </div>
+                        <div class="mx-auto lg:mx-0 w-5/5 pt-3 border-b-2 border-green-500 opacity-25 mb-10"></div>
+
+                        <div id="apropos">
+                            <p class="text-base"> <span class="font-black">Mail: </span> <span th:text="${speaker.email}"></span></p>
+                            <p class="text-base"><span class="font-black">Statut: </span><span th:text="${speaker.professionalStatus}"></span></p>
+                            <p class="text-base"><span class="font-black">Métier / poste actuel: </span><span th:text="${speaker.job}"></span></p>
+
+                            <p class="text-base"><span class="font-black">Tarif Bc: </span><span th:text="${speaker.bachelorRate}"></span></p>
+                            <p class="text-base"><span class="font-black">Tarif M1: </span><span th:text="${speaker.masterOneRate}"></span></p>
+                            <p class="text-base"><span class="font-black">Tarif M2: </span><span th:text="${speaker.masterTwoRate}"></span></p>
+
+                            <div class="pt-12 pb-8" th:if="${speaker.resumePath == null || speaker.resumePath.length() == 0 }">
+                                <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" th:href="@{/admin/speakers/{id}/upload(id = ${speaker.id})}" target="_blank">
+                                    Importer le CV
+                                </a>
+                            </div>
+                            <div class="pt-12 pb-8" th:if="${speaker.resumePath != null && speaker.resumePath.length() > 0 }">
+                                <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" th:href="@{/uploads/{path}(path= ${speaker.resumePath})}" target="_blank">
+                                    Voir le CV
+                                </a>
+                            </div>
+
+                        </div>
+                        <div id="adresses" class="hidden">
+
+                            <div class="pt-2 pb-8">
+                                <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" th:href="@{/admin/speakers/{id}/address(id = ${id})}">
+                                    Ajouter une adresse
+                                </a>
+                            </div>
+
+                            <div th:each="address: ${speaker.getAddresses()}">
+                                <p class="text-sm font-extrabold" th:text="${address.street} + '  ' + ${address.line}"></p>
+                                <p class="text-xs font-bold"><a th:href="'tel:'+${address.linePhoneOne}" target="_blank" rel="noopener noreferrer" th:text="${address.linePhoneOne}"></a> <span th:text="${address.linePhoneTwo}"></span></p>
+                                <p class="text-sm mb-4" th:text="${address.postCode} + ', ' + ${address.city}"></p>
+                            </div>
+
+                        </div>
+                        <div id="interventions" class="hidden">
+                            <p class="text-sm font-extrabold">Master 1 Biotech -- Je marché des biotechs -- 2019-2020</p>
+                            <p class="text-xs font-bold mb-4">A+
+                                <span class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700">Modiffier</span>
+                            </p>
+
+                            <p class="text-sm font-extrabold">Master 2 Général -- Je Marketing -- 2020-2021</p>
+                            <p class="text-xs font-bold mb-4">Pas encore évalué
+                                <span class="inline-flex items-center justify-center px-1 py-1 mr-1 text-xs font-bold leading-none text-green-100 bg-green-700">Evaluer</span>
+                            </p>
+                        </div>
+                        <div id="competences" class="hidden flex flex-row  space-x-2">
+                            <div class="pt-2 pb-8">
+                                <a class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full" th:href="@{/admin/speakers/{id}/subjects(id = ${id})}">
+                                    Modifier
+                                </a>
+                            </div>
+
+                            <div class="w-full">
+                                <div class="flex flex-col w-full space-y-3">
+                                    <div class="relative w-full bg-gray-200 rounded" th:each="subject: ${speaker.subjects}">
+                                        <div style="width: 60%" class="absolute top-0 h-5 rounded shim-blue pl-1" th:text="${subject.name}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="autres" class="hidden">
+                        </div>
+                        <!-- Use https://simpleicons.org/ to find the svg for your preferred product -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script>
+    /*Toggle dropdown list*/
+    function toggleDD(myDropMenu) {
+        document.getElementById(myDropMenu).classList.toggle("invisible");
+    }
+    /*Filter dropdown options*/
+    function filterDD(myDropMenu, myDropMenuSearch) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById(myDropMenuSearch);
+        filter = input.value.toUpperCase();
+        div = document.getElementById(myDropMenu);
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+            var dropdowns = document.getElementsByClassName("dropdownlist");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (!openDropdown.classList.contains('invisible')) {
+                    openDropdown.classList.add('invisible');
+                }
+            }
+        }
+    }
+
+    let menu = ["apropos","adresses","interventions", "competences"]
+    switchTo = (id) => {
+        console.log(id)
+        menu.forEach(element => {
+            document.getElementById(element).classList.add('hidden')
+        });
+        document.getElementById(id).classList.remove('hidden')
+    }
+</script>
+
+
+</body>
+
+</html>
