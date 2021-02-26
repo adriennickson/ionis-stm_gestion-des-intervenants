@@ -1,4 +1,4 @@
-FROM openjdk:11 as build
+FROM openjdk:11
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
