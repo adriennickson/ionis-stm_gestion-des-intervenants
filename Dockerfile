@@ -4,9 +4,9 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
-RUN ./mvnw clean install -DskipTests
+RUN ./mvnw clean install -DskipTests -Dfile=./target/
 #RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-COPY /../../../../../root/.m2/repository/com/ionis-stm/intervenants/0.0.1-SNAPSHOT/intervenants-0.0.1-SNAPSHOT.jar app.jar
+COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
