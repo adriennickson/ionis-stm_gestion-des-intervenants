@@ -9,6 +9,6 @@ RUN pwd
 RUN ls -la
 #RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-COPY target/*.jar app.jar
+COPY /target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
