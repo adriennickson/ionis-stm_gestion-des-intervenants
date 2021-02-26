@@ -11,6 +11,6 @@ RUN ls -la /target/
 RUN ls -la
 #RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-RUN COPY /target/intervenants-0.0.1-SNAPSHOT.jar app.jar
+COPY /target/intervenants-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
