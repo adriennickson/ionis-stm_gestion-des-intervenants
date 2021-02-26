@@ -5,7 +5,7 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
-RUN ./mvnw install -DskipTests -Dfile=./target/ -DlocalRepositoryPath=./target/ -Dmaven.repo.local=`pwd`/target/
+RUN ./mvnw install -DskipTests # -Dfile=./target/ -DlocalRepositoryPath=./target/ -Dmaven.repo.local=`pwd`/target/
 RUN pwd
 RUN ls -la /target/
 RUN ls -la
