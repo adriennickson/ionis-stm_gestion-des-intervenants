@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:11-jdk-alpine
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
